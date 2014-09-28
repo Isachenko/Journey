@@ -9,14 +9,18 @@ int Route::getTotalTime() const
 void Route::addFrontJourney(JourneyInfo *journeyInfo)
 {
     journeys.push_front(journeyInfo);
+    totalTime += journeyInfo->getTime();
 }
 
 void Route::addBackJourney(JourneyInfo *journeyInfo)
 {
     journeys.push_back(journeyInfo);
+    totalTime += journeyInfo->getTime();
 }
 
-Route::Route()
+Route::Route() :
+    totalTime(0),
+    journeys()
 {
 }
 

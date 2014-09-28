@@ -84,37 +84,73 @@ TEST_FIXTURE(ConstructorFixture, JourneyTest)
 }
 
 
-TEST_FIXTURE(ConstructorFixture, RouteTest1)
-{
+SUITE (RouteTests){
+    TEST_FIXTURE(ConstructorFixture, RouteTest1)
+    {
+        std::list<CityInfo* > cities;
+        cities.push_back(baCity);
+        cities.push_back(nyCity);
+        cities.push_back(lvCity);
+        Route* route = map.createRoute(cities);
+        CHECK_EQUAL(10, route->getTotalTime());
+
+        cities.clear();
+        cities.push_back(baCity);
+        cities.push_back(cbCity);
+        cities.push_back(lvCity);
+        route = map.createRoute(cities);
+        CHECK_EQUAL(8, route->getTotalTime());
+
+        cities.clear();
+        cities.push_back(baCity);
+        cities.push_back(ctCity);
+        cities.push_back(nyCity);
+        cities.push_back(lvCity);
+        route = map.createRoute(cities);
+        CHECK_EQUAL(16, route->getTotalTime());
+
+        cities.clear();
+        cities.push_back(baCity);
+        cities.push_back(ctCity);
+        cities.push_back(cbCity);
+        route = map.createRoute(cities);
+        CHECK(nullptr == route);
+    }
+
+    TEST_FIXTURE(ConstructorFixture, RouteTest2)
+    {
+        Route* route = map.getFastestRoute(baCity, lvCity);
+        CHECK_EQUAL(8, route->getTotalTime());
+
+
+        route = map.getFastestRoute(nyCity, nyCity);
+        CHECK_EQUAL(0, route->getTotalTime());
+
+
+    }
+
+    TEST_FIXTURE(ConstructorFixture, RouteTest3)
+    {
+        int routCount = map.getRouteCountByEqualOrLessStopsCount(lvCity, lvCity, 3);
+        CHECK_EQUAL(5, routCount);
+    }
+
+    TEST_FIXTURE(ConstructorFixture, RouteTest4)
+    {
+        int routCount = map.getRouteCountByEqualStopsCount(baCity, lvCity, 4);
+        CHECK_EQUAL(3, routCount);
+    }
+
+    TEST_FIXTURE(ConstructorFixture, RouteTest5)
+    {
+        int routCount = map.getRouteCountByEqualOrLessTime(lvCity, lvCity, 6);
+        CHECK_EQUAL(2, routCount);
+
+        routCount = map.getRouteCountByEqualOrLessTime(lvCity, lvCity, 25);
+        CHECK_EQUAL(9, routCount);
+    }
 
 }
-
-TEST_FIXTURE(ConstructorFixture, RouteTest2)
-{
-
-}
-
-TEST_FIXTURE(ConstructorFixture, RouteTest3)
-{
-    int routCount = map.getRouteCountByEqualOrLessStopsCount(lvCity, lvCity, 3);
-    CHECK_EQUAL(5, routCount);
-}
-
-TEST_FIXTURE(ConstructorFixture, RouteTest4)
-{
-    int routCount = map.getRouteCountByEqualStopsCount(baCity, lvCity, 4);
-    CHECK_EQUAL(3, routCount);
-}
-
-TEST_FIXTURE(ConstructorFixture, RouteTest5)
-{
-    int routCount = map.getRouteCountByEqualOrLessTime(lvCity, lvCity, 6);
-    CHECK_EQUAL(2, routCount);
-
-    routCount = map.getRouteCountByEqualOrLessTime(lvCity, lvCity, 25);
-    CHECK_EQUAL(9, routCount);
-}
-
 
 int main()
 {

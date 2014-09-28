@@ -60,7 +60,7 @@ public:
     JourneyInfo *getJourneyInfo(CityInfo* from, CityInfo* to);
 
     //1
-    Route *CreateRoute(std::list<CityInfo*> cities);
+    Route *createRoute(std::list<CityInfo*> &cities);
     //2
     Route* getFastestRoute(CityInfo *from, CityInfo *to);
     //3

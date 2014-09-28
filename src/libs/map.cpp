@@ -137,7 +137,7 @@ JourneyInfo *Map::getJourneyInfo(CityInfo *from, CityInfo *to)
     return nullptr;
 }
 
-Route *Map::CreateRoute(std::list<CityInfo *> cities)
+Route *Map::createRoute(std::list<CityInfo *> &cities)
 {
     if (cities.size() < 2) {
         throw std::invalid_argument("City Count to litle");
@@ -197,16 +197,16 @@ Route *Map::getFastestRoute(CityInfo* from, CityInfo* to)
 
     nodesForVisit.push(fromId);
     while (!nodesForVisit.empty()) {
-        int cutNodeId = nodesForVisit.front();
-        Node* curNode = nodes.at(nodesForVisit.front());
+        int curId = nodesForVisit.front();
+        Node* curNode = nodes.at(curId);
         nodesForVisit.pop();
         for(Edge* edge : curNode->edges) {
             int toId = edge->toNodeId;
-            if (!visited[toId] || (range[toId] > (range[cutNodeId] + edge->journeyInfo->getTime()) ) ) {
+            if (!visited[toId] || (range[toId] > (range[curId] + edge->journeyInfo->getTime()) ) ) {
                 nodesForVisit.push(toId);
                 visited[toId] = true;
-                parent[toId] = cutNodeId;
-                range[toId] =range[cutNodeId] + edge->journeyInfo->getTime();
+                parent[toId] = curId;
+                range[toId] = range[curId] + edge->journeyInfo->getTime();
             }
         }
     }
@@ -216,12 +216,14 @@ Route *Map::getFastestRoute(CityInfo* from, CityInfo* to)
         return route;
     }
 
-    int curParentId = parent[toId];
-    int curNodeId = toId;
+    int curId = toId;
+    int curParentId = parent[curId];
     while(curParentId != -1) {
-        Node curNode = *(nodes.at(curNodeId));
+        Node curNode = *(nodes.at(curId));
         Node curParent = *(nodes.at(curParentId));
-        route->addFrontJourney(new JourneyInfo(curParent.cityInfo, curNode.cityInfo, range[curNodeId] - range[curParentId]));
+        route->addFrontJourney(new JourneyInfo(curParent.cityInfo, curNode.cityInfo, range[curId] - range[curParentId]));
+        curId = curParentId;
+        curParentId = parent[curId];
     }
 
     delete[] range;

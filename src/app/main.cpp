@@ -31,4 +31,7 @@ int main()
     map.addJourney(new JourneyInfo(cbCity, lvCity, 3));
     map.addJourney(new JourneyInfo(cbCity, ctCity, 6));
     map.addJourney(new JourneyInfo(ctCity, nyCity, 8));
+
+    map.getFastestRoute(nyCity, nyCity);
+    map.getFastestRoute(baCity, lvCity);
 }
