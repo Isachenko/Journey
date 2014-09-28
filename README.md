@@ -1,5 +1,5 @@
 libs: consists journey lib
-=================
+----------------
 app: consists litle test program
 ----------------------------------
 tests: consists set of tests
