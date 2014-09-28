@@ -137,6 +137,7 @@ JourneyInfo *Map::getJourneyInfo(CityInfo *from, CityInfo *to)
     return nullptr;
 }
 
+//return nullptr if route not exist
 Route *Map::createRoute(std::list<CityInfo *> &cities)
 {
     if (cities.size() < 2) {
@@ -175,6 +176,7 @@ Route *Map::createRoute(std::list<CityInfo *> &cities)
     return route;
 }
 
+//return nullptr if route not exist
 Route *Map::getFastestRoute(CityInfo* from, CityInfo* to)
 {
     int fromId = getNodeIdByCityInfo(from);
@@ -211,10 +213,11 @@ Route *Map::getFastestRoute(CityInfo* from, CityInfo* to)
         }
     }
 
-    Route *route = new Route;
     if (!visited[toId]) {
-        return route;
+        return nullptr;
     }
+
+    Route *route = new Route;
 
     int curId = toId;
     int curParentId = parent[curId];

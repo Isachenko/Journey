@@ -9,8 +9,10 @@ private:
     std::list<JourneyInfo*> journeys;
 public:
     Route();
-    int getTotalTime() const;
+
     void addFrontJourney(JourneyInfo* journeyInfo);
     void addBackJourney(JourneyInfo *journeyInfo);
+
+    int getTotalTime() const;
 };
 

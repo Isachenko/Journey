@@ -12,6 +12,7 @@ private:
     class Node;
     class Edge;
 
+    //??
     class Edge{
     public:
         int toNodeId;
@@ -60,8 +61,10 @@ public:
     JourneyInfo *getJourneyInfo(CityInfo* from, CityInfo* to);
 
     //1
+    //return nullptr if route not exist
     Route *createRoute(std::list<CityInfo*> &cities);
     //2
+    //return nullptr if route not exist
     Route* getFastestRoute(CityInfo *from, CityInfo *to);
     //3
     int getRouteCountByEqualOrLessStopsCount(const CityInfo *from, const CityInfo *to, int stopsCount);

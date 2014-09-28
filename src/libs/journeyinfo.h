@@ -12,6 +12,7 @@ private:
 
 public:
     JourneyInfo(CityInfo* from, CityInfo *to, int time);
+
     CityInfo *getTo() const;
     CityInfo *getFrom() const;
     int getTime() const;

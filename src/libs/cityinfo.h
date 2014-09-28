@@ -10,8 +10,10 @@ private:
     std::string name;
 public:
     CityInfo(std::string name);
+
     std::string getName() const;
     void setName(const std::string &value);
+
     bool operator == (const CityInfo& city) const;
     bool operator == (const std::string& cityName) const;
     friend bool operator == (const std::string& cityName, const CityInfo& dt) {
